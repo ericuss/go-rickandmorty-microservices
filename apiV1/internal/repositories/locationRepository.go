@@ -18,7 +18,7 @@ type locationRepository struct {
 }
 
 func NewLocationRepository() *locationRepository {
-	host := "localhost"
+	host := "mongo"
 	port := 27017
 
 	clientOpts := options.Client().ApplyURI(fmt.Sprintf("mongodb://%s:%d", host, port))

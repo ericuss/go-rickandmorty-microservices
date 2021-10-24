@@ -16,7 +16,7 @@ func NewRickAndMortyService() *rickAndMortyService {
 }
 
 func (r *rickAndMortyService) GetCharacters() (characters *dtos.AllCharactersDto, err error) {
-	response, err := http.Get(fmt.Sprintf("%v", "https://charactersIntegrator.com/api/character?page=1"))
+	response, err := http.Get(fmt.Sprintf("%v", "https://rickandmortyapi.com/api/character?page=1"))
 	if err != nil {
 		return nil, err
 	}
