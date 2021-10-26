@@ -1,4 +1,4 @@
-package character
+package entities
 
 import "time"
 
@@ -10,8 +10,4 @@ type Location struct {
 	Residents []string  `bson:"Residents"`
 	URL       string    `bson:"Url"`
 	Created   time.Time `bson:"Created"`
-}
-
-type LocationRepository interface {
-	Fetch() ([]*Location, error)
 }

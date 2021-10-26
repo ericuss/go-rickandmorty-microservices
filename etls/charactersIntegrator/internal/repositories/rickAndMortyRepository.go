@@ -1,4 +1,4 @@
-package Repositories
+package repositories
 
 type RickAndMortyRepository interface {
 	RepositoryBase

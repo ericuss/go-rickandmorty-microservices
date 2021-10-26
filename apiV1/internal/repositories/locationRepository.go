@@ -2,57 +2,40 @@ package repositories
 
 import (
 	"context"
-	"fmt"
 	"log"
 
-	location "rickAndMortyApi/internal"
+	entities "rickAndMortyApi/internal/entities"
 
 	"go.mongodb.org/mongo-driver/bson"
-	mongo "go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
+type LocationRepository interface {
+	RepositoryBase
+	Fetch() ([]*entities.Location, error)
+}
+
 type locationRepository struct {
-	client     *mongo.Client
-	collection *mongo.Collection
+	repositoryBase
 }
 
 func NewLocationRepository() *locationRepository {
-	host := "mongo"
-	port := 27017
-
-	clientOpts := options.Client().ApplyURI(fmt.Sprintf("mongodb://%s:%d", host, port))
-	client, err := mongo.Connect(context.TODO(), clientOpts)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// Check the connections
-	err = client.Ping(context.TODO(), nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Println("Congratulations, you're already connected to MongoDB!")
-	collection := client.Database("RickAndMorty").Collection("Locations")
-
 	return &locationRepository{
-		client:     client,
-		collection: collection,
+		repositoryBase: *NewRepositoryBase("Locations"),
 	}
 }
 
-func (r *locationRepository) Fetch() ([]*location.Location, error) {
-	var results []*location.Location
+func (r *locationRepository) Fetch() ([]*entities.Location, error) {
+	var results []*entities.Location
 	findOptions := options.Find()
-	cur, err := r.collection.Find(context.TODO(), bson.D{{}}, findOptions)
+	cur, err := r.repositoryBase.collection.Find(context.TODO(), bson.D{{}}, findOptions)
 	if err != nil {
 		log.Fatal(err)
 	}
 	for cur.Next(context.TODO()) {
 
 		// create a value into which the single document can be decoded
-		var s location.Location
+		var s entities.Location
 		err := cur.Decode(&s)
 		if err != nil {
 			log.Fatal(err)

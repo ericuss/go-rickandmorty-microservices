@@ -6,15 +6,11 @@ import (
 	"log"
 	"os"
 
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	mongo "go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 type RepositoryBase interface {
-	Add(entity interface{}) (id primitive.ObjectID, err error)
-	Upsert(id int, entity interface{}) (updateResult *mongo.UpdateResult, err error)
 }
 
 type repositoryBase struct {
@@ -44,29 +40,4 @@ func NewRepositoryBase(collectionName string) *repositoryBase {
 		client:     client,
 		collection: collection,
 	}
-}
-
-func (r *repositoryBase) Add(entity interface{}) (id primitive.ObjectID, err error) {
-	result, err := r.collection.InsertOne(context.TODO(), entity)
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return result.InsertedID.(primitive.ObjectID), nil
-}
-
-func (r *repositoryBase) Upsert(id int, entity interface{}) (updateResult *mongo.UpdateResult, err error) {
-	result, err := r.collection.UpdateOne(
-		context.Background(),
-		bson.M{"Id": id},
-		bson.M{"$set": entity},
-		options.Update().SetUpsert(true),
-	)
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return result, nil
 }

@@ -8,14 +8,20 @@ services:
       - "27017:27017"
   
   etls-characters:
+    environment:
+    - connectionString=mongodb://mongo:27017
     depends_on:    
     - mongo
 
   etls-locations:
+    environment:
+    - connectionString=mongodb://mongo:27017
     depends_on:    
     - mongo
   
   api:
+    environment:
+    - connectionString=mongodb://mongo:27017
     ports:
       - "5008:8080"
     depends_on:    

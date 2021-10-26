@@ -4,17 +4,17 @@ import (
 	"encoding/json"
 	"net/http"
 
-	character "rickAndMortyApi/internal"
+	repositories "rickAndMortyApi/internal/repositories"
 
 	"github.com/gorilla/mux"
 )
 
 type charactersController struct {
 	router     *mux.Router
-	repository character.CharacterRepository
+	repository repositories.CharacterRepository
 }
 
-func NewCharactersController(repository character.CharacterRepository, r *mux.Router) Server {
+func NewCharactersController(repository repositories.CharacterRepository, r *mux.Router) Server {
 	a := &charactersController{repository: repository}
 
 	r.HandleFunc("/api/characters", a.fetch).Methods(http.MethodGet)
@@ -31,7 +31,7 @@ func (a *charactersController) Router() mux.Router {
 }
 
 func (a *charactersController) fetch(w http.ResponseWriter, r *http.Request) {
-	beers, _ := a.repository.FetchCharacters()
+	beers, _ := a.repository.Fetch()
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(beers)

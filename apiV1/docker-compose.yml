@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  api:
+    image: ${DOCKER_REGISTRY:-rickandmorty}/api:${TAG:-latest}
+    build:
+      context: ../
+      dockerfile: apiV1/Dockerfile

@@ -1,4 +1,4 @@
-package character
+package entities
 
 type Character struct {
 	Id      int    `bson:"Id"`
@@ -19,8 +19,4 @@ type Character struct {
 	Episode []string `bson:"Episode"`
 	URL     string   `bson:"Url"`
 	Created string   `bson:"Created"`
-}
-
-type CharacterRepository interface {
-	FetchCharacters() ([]*Character, error)
 }

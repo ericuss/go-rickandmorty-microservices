@@ -2,57 +2,40 @@ package repositories
 
 import (
 	"context"
-	"fmt"
 	"log"
 
-	character "rickAndMortyApi/internal"
+	entities "rickAndMortyApi/internal/entities"
 
 	"go.mongodb.org/mongo-driver/bson"
-	mongo "go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
+type CharacterRepository interface {
+	RepositoryBase
+	Fetch() ([]*entities.Character, error)
+}
+
 type characterRepository struct {
-	client     *mongo.Client
-	collection *mongo.Collection
+	repositoryBase
 }
 
 func NewCharacterRepository() *characterRepository {
-	host := "mongo"
-	port := 27017
-
-	clientOpts := options.Client().ApplyURI(fmt.Sprintf("mongodb://%s:%d", host, port))
-	client, err := mongo.Connect(context.TODO(), clientOpts)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// Check the connections
-	err = client.Ping(context.TODO(), nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Println("Congratulations, you're already connected to MongoDB!")
-	collection := client.Database("RickAndMorty").Collection("Characters")
-
 	return &characterRepository{
-		client:     client,
-		collection: collection,
+		repositoryBase: *NewRepositoryBase("Characters"),
 	}
 }
 
-func (r *characterRepository) FetchCharacters() ([]*character.Character, error) {
-	var results []*character.Character
+func (r *characterRepository) Fetch() ([]*entities.Character, error) {
+	var results []*entities.Character
 	findOptions := options.Find()
-	cur, err := r.collection.Find(context.TODO(), bson.D{{}}, findOptions)
+	cur, err := r.repositoryBase.collection.Find(context.TODO(), bson.D{{}}, findOptions)
 	if err != nil {
 		log.Fatal(err)
 	}
 	for cur.Next(context.TODO()) {
 
 		// create a value into which the single document can be decoded
-		var s character.Character
+		var s entities.Character
 		err := cur.Decode(&s)
 		if err != nil {
 			log.Fatal(err)

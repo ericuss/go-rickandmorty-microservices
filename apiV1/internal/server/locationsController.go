@@ -4,17 +4,17 @@ import (
 	"encoding/json"
 	"net/http"
 
-	location "rickAndMortyApi/internal"
+	repositories "rickAndMortyApi/internal/repositories"
 
 	"github.com/gorilla/mux"
 )
 
 type locationsController struct {
 	router     *mux.Router
-	repository location.LocationRepository
+	repository repositories.LocationRepository
 }
 
-func NewLocationsController(repository location.LocationRepository, r *mux.Router) Server {
+func NewLocationsController(repository repositories.LocationRepository, r *mux.Router) Server {
 	a := &locationsController{repository: repository}
 
 	r.HandleFunc("/api/locations", a.fetch).Methods(http.MethodGet)
