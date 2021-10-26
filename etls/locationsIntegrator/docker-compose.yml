@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  etls-locations:
+    image: ${DOCKER_REGISTRY:-rickandmorty}/locationsintegration:${TAG:-latest}
+    build:
+      context: ../../
+      dockerfile: etls/locationsIntegrator/Dockerfile

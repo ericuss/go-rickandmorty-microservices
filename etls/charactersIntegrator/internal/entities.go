@@ -1,7 +1,11 @@
 package entities
 
+type Entity struct {
+	Id int
+}
+
 type Character struct {
-	Id      int    `bson:"Id"`
+	Entity
 	Name    string `bson:"Name"`
 	Status  string `bson:"Status"`
 	Species string `bson:"Species"`

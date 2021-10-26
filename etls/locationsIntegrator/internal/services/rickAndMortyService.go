@@ -8,15 +8,22 @@ import (
 	"net/http"
 )
 
+type RickAndMortyService interface {
+	GetLocations(page int) (locations *dtos.AllLocationsDto, err error)
+}
+
 type rickAndMortyService struct {
+	url string
 }
 
 func NewRickAndMortyService() *rickAndMortyService {
-	return &rickAndMortyService{}
+	return &rickAndMortyService{
+		url: "https://rickandmortyapi.com/api/location?page=%d",
+	}
 }
 
-func (r *rickAndMortyService) GetLocations() (locations *dtos.AllLocationsDto, err error) {
-	response, err := http.Get(fmt.Sprintf("%v", "https://rickandmortyapi.com/api/location?page=1"))
+func (r *rickAndMortyService) GetLocations(page int) (characters *dtos.AllLocationsDto, err error) {
+	response, err := http.Get(fmt.Sprintf(r.url, page))
 	if err != nil {
 		return nil, err
 	}
@@ -26,7 +33,7 @@ func (r *rickAndMortyService) GetLocations() (locations *dtos.AllLocationsDto, e
 		return nil, err
 	}
 
-	err = json.Unmarshal(contents, &locations)
+	err = json.Unmarshal(contents, &characters)
 	if err != nil {
 		return nil, err
 	}

@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  mongo:
+    image: mongo:4.4.5
+    restart: always
+    ports:
+      - "27017:27017"
+  
+  etls-characters:
+    environment:
+    - connectionString=mongodb://mongo:27017
+    depends_on:    
+    - mongo

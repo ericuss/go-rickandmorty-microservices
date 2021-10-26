@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  etls-characters:
+    image: ${DOCKER_REGISTRY:-rickandmorty}/charactersintegration:${TAG:-latest}
+    build:
+      context: ../../
+      dockerfile: etls/charactersIntegrator/Dockerfile
