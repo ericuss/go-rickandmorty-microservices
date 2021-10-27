@@ -14,8 +14,8 @@ Exposes api endpoints:
 
 ## Etl - Character integration
 
-Integrate the first page of the characters
+Integrate entity of characters
 
 ## Etl - Locations integration
 
-Integrate the first page of the locations
+Integrate entity of locations
