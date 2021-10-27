@@ -9,18 +9,17 @@ function App() {
     <div className="App">
       <Router>
         <header className="App-header">
-          <Logo fill="white"></Logo>
           <main>
             <nav>
-              <ul>
-                <li><a href="/">Characters</a></li>
-                <li><a href="/Links">Environment links</a></li>
+              <ul className="App-menu">
+                <Logo className="App-menu-item--logo"></Logo>
+                <li className="App-menu-item"><a href="/">Characters</a></li>
               </ul>
             </nav>
           </main>
         </header>
         <div className="App-content">
-          <Route path="/" exact  component={Characters} />
+          <Route path="/" exact component={Characters} />
         </div>
       </Router>
 

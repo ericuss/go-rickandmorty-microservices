@@ -6,6 +6,15 @@ First steps of the integration with https://rickandmortyapi.com/ api.
 
 # Services
 
+## Web
+
+Url of website:
+- http://localhost:3000
+
+![Characters page](docs/images/characters.png)
+
+
+
 ## Api
 
 Exposes api endpoints:
