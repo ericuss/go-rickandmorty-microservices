@@ -16,3 +16,8 @@ services:
     build:
       context: .
       dockerfile: apiV1/Dockerfile
+  web:
+    image: ${DOCKER_REGISTRY:-rickandmorty}/web:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: web/Dockerfile

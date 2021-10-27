@@ -28,3 +28,11 @@ services:
     - mongo
     - etls-characters
     - etls-locations
+
+  web:
+    # environment:
+    # - connectionString=mongodb://mongo:27017
+    ports:
+      - "3000:80"
+    depends_on:    
+    - api
