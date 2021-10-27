@@ -11,9 +11,11 @@ First steps of the integration with https://rickandmortyapi.com/ api.
 Url of website:
 - http://localhost:3000
 
+### Characters:
 ![Characters page](docs/images/characters.png)
 
-
+### Locations:
+![Locations page](docs/images/locations.png)
 
 ## Api
 
